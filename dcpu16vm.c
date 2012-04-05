@@ -1,3 +1,10 @@
+/*
+ * dcpu16vm.c
+ * Copyright 2012 Jonathan Page. All rights reserved.
+ *
+ * Mainloop and IO routines for VM.
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "vm.h"

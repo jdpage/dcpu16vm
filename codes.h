@@ -1,3 +1,10 @@
+/*
+ * codes.h
+ * Copyright 2012 Jonathan Page. All rights reserved.
+ *
+ * Contains constants for opcodes, registers, etc.
+ */
+
 #ifndef CODES_H
 #define CODES_H
 

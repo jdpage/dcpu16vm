@@ -1,3 +1,10 @@
+/*
+ * vm.h
+ * Copyright 2012 Jonathan Page. All rights reserved.
+ *
+ * Interface for vm.c
+ */
+
 #ifndef VM_H
 #define VM_H
 

@@ -1,3 +1,10 @@
+/*
+ * vm.c
+ * Copyright 2012 Jonathan Page. All rights reserved.
+ *
+ * Contains VM init and execution routines
+ */
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
