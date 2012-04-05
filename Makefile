@@ -20,5 +20,5 @@ rebuild: clean all
 -include $(DEPFILES)
 
 %.o: %.c Makefile
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
 

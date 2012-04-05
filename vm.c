@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include "codes.h"
 #include "vm.h"
 
@@ -54,7 +55,7 @@ uint16_t *get_ptr(vm_cpu_t *cpu, uint16_t aaaaaa) {
     } else if (aaaaaa < NW_MEM_AT) {
         return cpu->ram + cpu->reg[aaaaaa & THREE_BITS];
     } else if (aaaaaa < POP) {
-        return cpu->ram + cpu->ram[++cpu->pc] + cpu->reg[aaaaaa & THREE_BITS];
+        return cpu->ram + cpu->ram[cpu->pc++] + cpu->reg[aaaaaa & THREE_BITS];
     }
     switch (aaaaaa) {
         case POP:
@@ -72,7 +73,7 @@ uint16_t *get_ptr(vm_cpu_t *cpu, uint16_t aaaaaa) {
         case NW:
             return cpu->ram + cpu->ram[++cpu->pc];
         case LIT_NW:
-            return cpu->ram + (++cpu->pc);
+            return cpu->ram + (cpu->pc++);
     }
     *temp = aaaaaa ^ LIT;
     return temp;
@@ -84,7 +85,8 @@ int vm_cpu_step(vm_cpu_t *cpu) {
 
     /* In bits, a basic instruction has the format: bbbbbbaaaaaaoooo */
     /* a nonbasic one has the format: aaaaaaoooooo0000 */
-    word = cpu->ram[cpu->pc];
+    word = cpu->ram[cpu->pc++];
+    fprintf(stderr, "executing word: %x\n", word);
     opcode = word & FOUR_BITS;
     dest  = get_ptr(cpu, (word >>  4) & SIX_BITS);
     src   = get_ptr(cpu, (word >> 10) & SIX_BITS);
@@ -176,6 +178,5 @@ int vm_cpu_step(vm_cpu_t *cpu) {
                 return VM_BADOP;
         }
     }
-    cpu->pc++;
     return VM_OK;
 }

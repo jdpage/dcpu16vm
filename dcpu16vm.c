@@ -38,6 +38,7 @@ void remap_video_mem(vm_cpu_t *cpu, FILE *fp) {
 int main(int argc, char **argv) {
     vm_cpu_t *cpu;
     FILE *fp;
+    int res;
 
     if (argc != 2) {
         fprintf(stderr, "usage: %s filename\n", argv[0]);
@@ -51,9 +52,17 @@ int main(int argc, char **argv) {
 
     cpu = vm_cpu_new();
     load_file(cpu, fp);
-    while (vm_cpu_step(cpu) != VM_DONE) {
-        maybe_get_char(cpu);
-        remap_video_mem(cpu, stdout);
+    while (1) {
+        res = vm_cpu_step(cpu);
+        if (res == VM_DONE) {
+            break;
+        } else if (res == VM_BADOP) {
+            fprintf(stderr, "bad op!");
+            break;
+        } else {
+            maybe_get_char(cpu);
+            remap_video_mem(cpu, stdout);
+        }
     }
     return 0;
 }
